@@ -10,10 +10,9 @@ RSpec.feature "User Signup", type: :feature do
     fill_in "Password confirmation", with: "password123"
     
     click_button "Sign Up"
-    
-    expect(page).to have_content("Account created successfully!")
-    expect(page).to have_content("Welcome, testuser")
-    expect(current_path).to eq(root_path)
+
+    expect(page).to have_current_path(new_empire_path)
+    expect(page).to have_content("Account created successfully! Now create your empire.")
   end
   
   scenario "User fails to sign up with invalid information" do

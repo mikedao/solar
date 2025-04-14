@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_one :empire, dependent: :destroy
 
   validates :username, presence: true, 
                        uniqueness: true,

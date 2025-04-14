@@ -1,0 +1,34 @@
+<div class="container mt-4">
+  <h2>Create Your Empire</h2>
+
+  <%= form_with(model: @empire, local: true) do |f| %>
+    <% if @empire.errors.any? %>
+      <div class="alert alert-danger">
+        <h4>The following errors prevented creating your empire:</h4>
+        <ul>
+          <% @empire.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-3">
+      <%= f.label :name, "Empire Name", class: "form-label" %>
+      <%= f.text_field :name, class: "form-control", placeholder: "Enter your empire name" %>
+    </div>
+
+    <div class="alert alert-info">
+      <p><strong>New Empire Resources:</strong></p>
+      <ul>
+        <li>Credits: 1000</li>
+        <li>Minerals: 500</li>
+        <li>Energy: 200</li>
+        <li>Food: 300</li>
+        <li>Population: 100</li>
+      </ul>
+    </div>
+
+    <%= f.submit "Create Empire", class: "btn btn-primary" %>
+  <% end %>
+</div>
