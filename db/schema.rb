@@ -14,14 +14,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_14_180559) do
   create_table "empires", force: :cascade do |t|
     t.string "name", null: false
     t.integer "user_id", null: false
-    t.integer "credits"
-    t.integer "minerals"
-    t.integer "energy"
-    t.integer "food"
-    t.integer "population"
+    t.integer "credits", default: 1000
+    t.integer "minerals", default: 500
+    t.integer "energy", default: 500
+    t.integer "food", default: 500
+    t.integer "population", default: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_empires_on_user_id"
+    t.index ["user_id"], name: "index_empires_on_user_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|

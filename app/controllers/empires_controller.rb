@@ -1,7 +1,7 @@
 # app/controllers/empires_controller.rb
 class EmpiresController < ApplicationController
   before_action :require_user
-  before_action :set_empire, only: [:show, :edit, :update]
+  before_action :set_empire, only: [:show, :edit, :update, :update_resources]
   before_action :require_same_user, only: [:show, :edit, :update]
 
   def show
@@ -48,6 +48,25 @@ class EmpiresController < ApplicationController
     end
   end
 
+  def update_resources
+    # Simple endpoint for testing resource updates
+    if resource_params[:action] == 'add'
+      @empire.add_credits(resource_params[:amount].to_i) if resource_params[:resource] == 'credits'
+      @empire.add_minerals(resource_params[:amount].to_i) if resource_params[:resource] == 'minerals'
+      @empire.add_energy(resource_params[:amount].to_i) if resource_params[:resource] == 'energy'
+      @empire.add_food(resource_params[:amount].to_i) if resource_params[:resource] == 'food'
+      @empire.add_population(resource_params[:amount].to_i) if resource_params[:resource] == 'population'
+    else
+      @empire.remove_credits(resource_params[:amount].to_i) if resource_params[:resource] == 'credits'
+      @empire.remove_minerals(resource_params[:amount].to_i) if resource_params[:resource] == 'minerals'
+      @empire.remove_energy(resource_params[:amount].to_i) if resource_params[:resource] == 'energy'
+      @empire.remove_food(resource_params[:amount].to_i) if resource_params[:resource] == 'food'
+      @empire.remove_population(resource_params[:amount].to_i) if resource_params[:resource] == 'population'
+    end
+    
+    redirect_to empire_path(@empire), notice: "Resources updated successfully!"
+  end
+
   private
 
   def empire_params
@@ -56,6 +75,10 @@ class EmpiresController < ApplicationController
 
   def set_empire
     @empire = Empire.find(params[:id])
+  end
+
+  def resource_params
+    params.require(:resource_update).permit(:resource, :action, :amount)
   end
 
   def require_same_user

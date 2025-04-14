@@ -50,7 +50,7 @@ RSpec.feature "Empire Management", type: :feature do
     visit empire_path(empire)
     
     expect(page).to have_content("Test Empire")
-    expect(page).to have_content("Ruler: testuser")
+    expect(page).to have_content("Welcome, testuser")
     expect(page).to have_content("Credits")
     expect(page).to have_content("2000")
     expect(page).to have_content("Minerals")
