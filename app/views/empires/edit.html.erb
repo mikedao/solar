@@ -1,0 +1,24 @@
+<div class="container mt-4">
+  <h2>Edit Your Empire</h2>
+
+  <%= form_with(model: @empire, local: true) do |f| %>
+    <% if @empire.errors.any? %>
+      <div class="alert alert-danger">
+        <h4>The following errors prevented updating your empire:</h4>
+        <ul>
+          <% @empire.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-3">
+      <%= f.label :name, "Empire Name", class: "form-label" %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+
+    <%= f.submit "Update Empire", class: "btn btn-primary" %>
+    <%= link_to "Cancel", empire_path(@empire), class: "btn btn-secondary" %>
+  <% end %>
+</div>

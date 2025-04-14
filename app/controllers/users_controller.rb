@@ -7,7 +7,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_path, notice: 'Account created successfully!'
+      flash[:notice] = 'Account created successfully! Now create your empire.'
+      redirect_to new_empire_path
     else
       render :new, status: :unprocessable_entity
     end
