@@ -1,0 +1,11 @@
+<div class="container mt-4">
+  <div class="jumbotron">
+    <h1 class="display-4">Welcome to Solar Game</h1>
+    <p class="lead">Your space adventure awaits!</p>
+    <hr class="my-4">
+    <% unless logged_in? %>
+      <%= link_to "Sign Up", signup_path, class: "btn btn-primary btn-lg" %>
+      <%= link_to "Log In", login_path, class: "btn btn-secondary btn-lg" %>
+    <% end %>
+  </div>
+</div>

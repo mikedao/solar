@@ -9,6 +9,12 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web => '/sidekiq'
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  root 'welcome#index'
+  
+  get 'signup', to: 'users#new'
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
+  
+  resources :users, only: [:new, :create]
 end
