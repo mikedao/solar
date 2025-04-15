@@ -38,4 +38,8 @@ class SystemTypesService
       description: "Dense clusters of asteroids with extensive mining opportunities."
     }
   }
+
+  def self.description_for(system_type)
+    SYSTEM_TYPES.dig(system_type.to_sym, :description) || "Unknown system type."
+  end
 end

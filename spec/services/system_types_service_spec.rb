@@ -17,4 +17,16 @@ RSpec.describe SystemTypesService do
       end
     end
   end
+
+  describe '.description_for' do
+    it 'returns the correct description for a system type' do
+      description = SystemTypesService.description_for(:gas_giant)
+      expect(description).to eq(SystemTypesService::SYSTEM_TYPES[:gas_giant][:description])
+    end
+  
+    it 'returns a default message for unknown system types' do
+      description = SystemTypesService.description_for(:invalid_type)
+      expect(description).to eq("Unknown system type.")
+    end
+  end
 end
