@@ -8,6 +8,7 @@ FactoryBot.define do
     current_population { 0 }
     loyalty { 100 }
     
-    association :empire, optional: true
+    # Empire association is nil by default (matches optional: true in model)
+    empire { nil }
   end
 end

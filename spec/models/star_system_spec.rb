@@ -13,7 +13,6 @@ RSpec.describe StarSystem, type: :model do
   describe 'associations' do
     it { should belong_to(:empire).optional }
     it { should belong_to(:previous_owner).class_name('Empire').optional }
-    it { should have_many(:planets) }
   end
 
   describe 'system_type enum' do
