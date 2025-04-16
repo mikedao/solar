@@ -81,4 +81,17 @@ RSpec.describe SystemTypesService do
       expect(SystemTypesService.generate_random_type).to eq(:terrestrial)
     end
   end
+
+  describe '.generate_attributes_for' do
+    it 'generates attributes within the specified ranges' do
+      attributes = SystemTypesService.generate_attributes_for(:ocean)
+      
+      pop_range = SystemTypesService::SYSTEM_TYPES[:ocean][:population_range]
+      building_range = SystemTypesService::SYSTEM_TYPES[:ocean][:buildings_range]
+      
+      expect(attributes[:max_population]).to be_between(pop_range[0], pop_range[1])
+      expect(attributes[:max_buildings]).to be_between(building_range[0], building_range[1])
+      expect(attributes[:description]).to eq(SystemTypesService::SYSTEM_TYPES[:ocean][:description])
+    end
+  end
 end

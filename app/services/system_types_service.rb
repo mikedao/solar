@@ -60,4 +60,15 @@ class SystemTypesService
     # Fallback (should never reach here unless weights are misconfigured)
     :terrestrial
   end
+
+  def self.generate_attributes_for(system_type)
+    ranges = attribute_ranges_for(system_type)
+    
+    {
+      max_population: rand(ranges[:population_range][0]..ranges[:population_range][1]),
+      max_buildings: rand(ranges[:buildings_range][0]..ranges[:buildings_range][1]),
+      description: ranges[:description]
+    }
+    # binding.pry
+  end
 end
