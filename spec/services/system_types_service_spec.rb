@@ -29,4 +29,56 @@ RSpec.describe SystemTypesService do
       expect(description).to eq("Unknown system type.")
     end
   end
+
+  describe '.attribute_ranges_for' do
+    it 'returns the correct ranges for a given system type' do
+      ranges = SystemTypesService.attribute_ranges_for(:desert)
+      expect(ranges).to eq(SystemTypesService::SYSTEM_TYPES[:desert])
+    end
+  
+    it 'returns terrestrial ranges for an unknown system type' do
+      ranges = SystemTypesService.attribute_ranges_for(:unknown)
+      expect(ranges).to eq(SystemTypesService::SYSTEM_TYPES[:terrestrial])
+    end
+  end
+
+  describe '.generate_random_type' do
+    it 'returns a valid system type' do
+      type = SystemTypesService.generate_random_type
+      expect(SystemTypesService::SYSTEM_TYPES.keys).to include(type)
+    end
+  
+    it 'generates a distribution of system types over many trials' do
+      results = Hash.new(0)
+      
+      1000.times do
+        type = SystemTypesService.generate_random_type
+        results[type] += 1
+      end
+      
+      # Check that each type appears at least once
+      expect(results.keys).to match_array(SystemTypesService::SYSTEM_TYPES.keys)
+      
+      # Check that higher weighted types appear more frequently
+      expect(results[:terrestrial]).to be > results[:ocean]
+      expect(results[:ocean]).to be > results[:desert]
+      expect(results[:ocean]).to be > results[:tundra]
+      expect(results[:desert]).to be > results[:gas_giant]
+      expect(results[:tundra]).to be > results[:gas_giant]
+      expect(results[:gas_giant]).to be > results[:asteroid_belt]
+    end
+
+    it 'returns terrestrial as fallback when random selection fails' do
+      total_weight = SystemTypesService::SYSTEM_TYPES.sum do |_, attributes| 
+        attributes[:weight] 
+      end
+      
+      # Stub rand to return a value equal to the total weight 
+      
+      # This forces the method to hit the fallback case
+      allow(SystemTypesService).to receive(:rand).and_return(total_weight)
+      
+      expect(SystemTypesService.generate_random_type).to eq(:terrestrial)
+    end
+  end
 end

@@ -42,4 +42,22 @@ class SystemTypesService
   def self.description_for(system_type)
     SYSTEM_TYPES.dig(system_type.to_sym, :description) || "Unknown system type."
   end
+
+  def self.attribute_ranges_for(system_type)
+    SYSTEM_TYPES[system_type.to_sym] || SYSTEM_TYPES[:terrestrial]
+  end
+
+  def self.generate_random_type
+    total_weight = SYSTEM_TYPES.sum { |_, attributes| attributes[:weight] }
+    random_value = rand(total_weight)
+    
+    cumulative_weight = 0
+    SYSTEM_TYPES.each do |type, attributes|
+      cumulative_weight += attributes[:weight]
+      return type if random_value < cumulative_weight
+    end
+    
+    # Fallback (should never reach here unless weights are misconfigured)
+    :terrestrial
+  end
 end
