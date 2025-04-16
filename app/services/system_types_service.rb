@@ -69,6 +69,11 @@ class SystemTypesService
       max_buildings: rand(ranges[:buildings_range][0]..ranges[:buildings_range][1]),
       description: ranges[:description]
     }
-    # binding.pry
+  end
+
+  def self.generate_system_attributes
+    type = generate_random_type
+    attributes = generate_attributes_for(type)
+    attributes.merge(system_type: type)
   end
 end
