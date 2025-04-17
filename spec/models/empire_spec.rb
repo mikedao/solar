@@ -20,5 +20,28 @@ RSpec.describe Empire, type: :model do
   
   describe 'associations' do
     it { should belong_to(:user) }
+    it { should have_many(:star_systems) }
+  end
+
+  # spec/models/empire_spec.rb - Add to the existing file
+
+  describe 'callbacks' do
+    describe 'after_create' do
+      it 'creates a starting star system' do
+        user = create(:user)
+        empire = create(:empire, user: user, name: "Galactic Republic")
+        
+        expect(empire.star_systems.count).to eq(1)
+        
+        system = empire.star_systems.first
+        expect(system.name).to eq("Galactic Republic Prime")
+        expect(system.system_type).to eq("terrestrial")
+        expect(system.max_population).to eq(1000)
+        expect(system.max_buildings).to eq(10)
+        expect(system.current_population).to eq(100)
+        expect(system.loyalty).to eq(100)
+        expect(system.status).to eq("discovered")
+      end
+    end
   end
 end

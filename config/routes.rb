@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   
   resources :users, only: [:new, :create]
   resources :empires, except: [:index, :destroy]
+  resources :star_systems, only: [:show]
 end
