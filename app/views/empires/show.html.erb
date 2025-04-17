@@ -1,48 +1,144 @@
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-md-8">
-      <div class="card mb-4">
-        <div class="card-header">
-          <h3><%= @empire.name %></h3>
+<div class="space-y-6">
+  <!-- Empire Header -->
+  <div class="bg-slate-800 rounded-lg shadow-lg overflow-hidden border border-slate-700">
+    <div class="px-6 py-5 border-b border-slate-700 flex items-center justify-between">
+      <h1 class="text-2xl font-bold text-slate-100">
+        <%= @empire.name %>
+      </h1>
+      <%= link_to edit_empire_path(@empire), class: "px-3 py-1.5 bg-slate-700 hover:bg-slate-600 rounded text-sm font-medium text-slate-300 flex items-center transition-colors" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+        </svg>
+        Edit
+      <% end %>
+    </div>
+    <div class="p-6">
+      <div class="flex items-center text-slate-300 mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 005 10a6 6 0 0012 0c0-.358-.035-.709-.104-1.05A5.001 5.001 0 0010 11z" clip-rule="evenodd" />
+        </svg>
+        <p>Ruler: <span class="font-semibold text-slate-100"><%= @empire.user.username %></span></p>
+      </div>
+      
+      <p class="text-slate-400 mb-4">Your galactic journey begins here. Expand your empire through exploration, resource management, and strategic decisions.</p>
+      
+      <!-- Statistics Summary -->
+      <div class="grid grid-cols-3 gap-4 mt-6">
+        <div class="bg-slate-700/50 rounded-md p-4 text-center">
+          <p class="text-sm text-slate-400">Systems</p>
+          <p class="text-2xl font-bold text-cyan-400">0</p>
         </div>
-        <div class="card-body">
-          <p><strong>Ruler:</strong> <%= @empire.user.username %></p>
-          <p class="card-text">Your galactic journey begins here. Expand your empire through exploration, resource management, and strategic decisions.</p>
-          <%= link_to "Edit Empire", edit_empire_path(@empire), class: "btn btn-secondary" %>
+        <div class="bg-slate-700/50 rounded-md p-4 text-center">
+          <p class="text-sm text-slate-400">Ships</p>
+          <p class="text-2xl font-bold text-cyan-400">0</p>
+        </div>
+        <div class="bg-slate-700/50 rounded-md p-4 text-center">
+          <p class="text-sm text-slate-400">Population</p>
+          <p class="text-2xl font-bold text-cyan-400"><%= @empire.population %></p>
         </div>
       </div>
     </div>
+  </div>
+  
+  <!-- Resources Panel -->
+  <div class="bg-slate-800 rounded-lg shadow-lg overflow-hidden border border-slate-700">
+    <div class="px-6 py-4 border-b border-slate-700">
+      <h2 class="text-xl font-bold text-slate-100">Resources</h2>
+    </div>
+    <div class="p-4">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <!-- Credits -->
+        <div class="flex flex-col bg-slate-700/50 rounded p-3">
+          <div class="flex items-center mb-2">
+            <div class="w-8 h-8 rounded-full bg-green-900/50 flex items-center justify-center mr-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <span class="text-sm text-slate-300">Credits</span>
+          </div>
+          <span class="text-lg font-bold text-green-400"><%= @empire.credits %></span>
+        </div>
+        
+        <!-- Minerals -->
+        <div class="flex flex-col bg-slate-700/50 rounded p-3">
+          <div class="flex items-center mb-2">
+            <div class="w-8 h-8 rounded-full bg-indigo-900/50 flex items-center justify-center mr-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5c0 .526-.27.988-.68 1.256a6.012 6.012 0 012.706 1.912A1.5 1.5 0 0111.5 13h-2.49a3.001 3.001 0 01-5.018-2.634 3 3 0 01.414-5.839 1.5 1.5 0 110-1.221 3.001 3.001 0 01-.414-2.634A1.5 1.5 0 014.5 7h2.49a1.5 1.5 0 01.926 1.027zM4.5 9.5a1.5 1.5 0 00-1.5 1.5c0 .576.324 1.071.801 1.325.478.254 1.049.254 1.526 0A1.5 1.5 0 004.5 9.5z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <span class="text-sm text-slate-300">Minerals</span>
+          </div>
+          <span class="text-lg font-bold text-indigo-400"><%= @empire.minerals %></span>
+        </div>
+        
+        <!-- Energy -->
+        <div class="flex flex-col bg-slate-700/50 rounded p-3">
+          <div class="flex items-center mb-2">
+            <div class="w-8 h-8 rounded-full bg-yellow-900/50 flex items-center justify-center mr-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <span class="text-sm text-slate-300">Energy</span>
+          </div>
+          <span class="text-lg font-bold text-yellow-400"><%= @empire.energy %></span>
+        </div>
+        
+        <!-- Food -->
+        <div class="flex flex-col bg-slate-700/50 rounded p-3">
+          <div class="flex items-center mb-2">
+            <div class="w-8 h-8 rounded-full bg-emerald-900/50 flex items-center justify-center mr-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <span class="text-sm text-slate-300">Food</span>
+          </div>
+          <span class="text-lg font-bold text-emerald-400"><%= @empire.food %></span>
+        </div>
+        
+        <!-- Population -->
+        <div class="flex flex-col bg-slate-700/50 rounded p-3">
+          <div class="flex items-center mb-2">
+            <div class="w-8 h-8 rounded-full bg-cyan-900/50 flex items-center justify-center mr-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-cyan-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+              </svg>
+            </div>
+            <span class="text-sm text-slate-300">Population</span>
+          </div>
+          <span class="text-lg font-bold text-cyan-400"><%= @empire.population %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Action Buttons -->
+  <div class="flex flex-wrap gap-4">
+    <button class="btn-primary flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z" />
+      </svg>
+      Build Fleets
+    </button>
     
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-header">
-          <h4>Resources</h4>
-        </div>
-        <div class="card-body">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Credits
-              <span class="badge bg-primary rounded-pill"><%= @empire.credits %></span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Minerals
-              <span class="badge bg-success rounded-pill"><%= @empire.minerals %></span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Energy
-              <span class="badge bg-warning rounded-pill"><%= @empire.energy %></span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Food
-              <span class="badge bg-info rounded-pill"><%= @empire.food %></span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Population
-              <span class="badge bg-secondary rounded-pill"><%= @empire.population %></span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <button class="btn-secondary flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+      </svg>
+      Explore
+    </button>
+    
+    <button class="btn-accent flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd" />
+      </svg>
+      Research
+    </button>
   </div>
 </div>
