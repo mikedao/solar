@@ -7,43 +7,85 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <%= link_to "Solar", root_path, class: "navbar-brand" %>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <% if logged_in? %>
-              <li class="nav-item">
-                <span class="nav-link">Welcome, <%= current_user.username %></span>
-              </li>
-              <li class="nav-item">
-                <%= link_to "Log Out", logout_path, data: { turbo_method: :delete }, class: "nav-link" %>
-              </li>
-            <% else %>
-              <li class="nav-item">
-                <%= link_to "Sign Up", signup_path, class: "nav-link" %>
-              </li>
-              <li class="nav-item">
-                <%= link_to "Log In", login_path, class: "nav-link" %>
-              </li>
+  <body class="bg-slate-900 text-slate-200 min-h-screen flex flex-col">
+    <!-- New Tailwind Navigation Bar -->
+    <nav class="bg-slate-800 border-b border-slate-700">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <!-- Logo/Brand -->
+            <%= link_to root_path, class: "flex items-center" do %>
+              <span class="text-cyan-500 text-xl font-bold">SOLAR</span>
+              <span class="ml-1 text-slate-400 text-xs">EMPIRE</span>
             <% end %>
-          </ul>
+          </div>
+          
+          <!-- Navigation Links -->
+          <div class="flex items-center">
+            <div class="flex space-x-4">
+              <% if logged_in? %>
+                <div class="flex items-center text-slate-300 mr-4">
+                  Welcome, <span class="font-semibold text-cyan-400 ml-1"><%= current_user.username %></span>
+                </div>
+                <%= link_to logout_path, 
+                    data: { turbo_method: :delete }, 
+                    class: "px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-cyan-400 transition-colors" do %>
+                  Log Out
+                <% end %>
+              <% else %>
+                <%= link_to signup_path, 
+                    class: "px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-cyan-400 transition-colors" do %>
+                  Sign Up
+                <% end %>
+                <%= link_to login_path, 
+                    class: "px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-cyan-400 transition-colors" do %>
+                  Log In
+                <% end %>
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
 
-    <div class="container mt-3">
+    <!-- Content Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow">
+      <!-- Flash Messages with Tailwind -->
       <% flash.each do |name, msg| %>
-        <div class="alert alert-<%= name == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show">
-          <%= msg %>
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div class="<%= name == 'notice' ? 'alert-success' : 'alert-danger' %> relative mb-6">
+          <div class="flex items-start p-4">
+            <% if name == 'notice' %>
+              <!-- Success Icon -->
+              <div class="flex-shrink-0 mr-2">
+                <svg class="h-5 w-5 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+              </div>
+            <% else %>
+              <!-- Error Icon -->
+              <div class="flex-shrink-0 mr-2">
+                <svg class="h-5 w-5 text-rose-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                </svg>
+              </div>
+            <% end %>
+            <div class="flex-1">
+              <p><%= msg %></p>
+            </div>
+            <!-- Close Button -->
+            <div class="ml-4 flex-shrink-0 flex">
+              <button type="button" class="inline-flex text-slate-400 hover:text-slate-200" 
+                      onclick="this.parentElement.parentElement.parentElement.remove()">
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
       <% end %>
 

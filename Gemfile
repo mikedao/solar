@@ -45,10 +45,7 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-gem "annotate"
-
-gem "bootstrap", "~> 5.3.0"
-gem "sassc-rails", "~> 2.1"
+gem "tailwindcss-rails", "~> 2.3"
 
 # Active Model has_secure_password
 gem "bcrypt", "~> 3.1.7"
